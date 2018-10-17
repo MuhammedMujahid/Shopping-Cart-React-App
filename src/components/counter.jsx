@@ -29,15 +29,18 @@ class Counter extends Component {
     );
   }
 
-  handleIncrement = () => {
-    console.log("WOW MUCH INCREMENT", this);
+  handleIncrement = product => {
+    // arrow function, so that "this" is not redefined
+    // console.log("WOW MUCH INCREMENT", this);
+    console.log(product);
+    this.setState({ count: this.state.count + 1 });
   };
   render() {
     return (
       <div>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={this.handleIncrement} //NOTE: passed reference instead of call for onClick
+          onClick={() => this.handleIncrement({ id: 1 })} //NOTE: passed reference instead of call for onClick -- PASSES ARGUMENT
           className="btn btn-secondary btn-sm"
         >
           Increment
