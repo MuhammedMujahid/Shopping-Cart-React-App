@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  state = {
-    count: 0,
-    tags: ["tag1", "tag2", "tag3"]
-  };
+  //   state = {
+  //     value: this.props.counter.value,
+  //     tags: ["tag1", "tag2", "tag3"]
+  //   };
 
   //   constructor(){
   //       super();
@@ -14,39 +14,45 @@ class Counter extends Component {
   //     fontSize: 50,
   //     fontWeight: "bold"
   //   };
-  renderTags() {
-    if (this.state.tags.length === 0) {
-      return <p>GG NO RE, ARRAY IS EMPTY</p>;
-    }
+  //   renderTags() {
+  //     if (this.state.tags.length === 0) {
+  //       return <p>GG NO RE, ARRAY IS EMPTY</p>;
+  //     }
 
-    return (
-      <ul>
-        {this.state.tags.map(tag => (
-          <li key={tag}>{tag}</li> // dynamically renders list by using map function, added key to uniquely identify elements.
-          // only necessary to uniquely identify within a list
-        ))}
-      </ul>
-    );
-  }
+  //     // return (
+  //     //   <ul>
+  //     //     {this.state.tags.map(tag => (
+  //     //       <li key={tag}>{tag}</li> // dynamically renders list by using map function, added key to uniquely identify elements.
+  //     //       // only necessary to uniquely identify within a list
+  //     //     ))}
+  //     //   </ul>
+  //     // );
+  //   }
 
-  handleIncrement = product => {
-    // arrow function, so that "this" is not redefined
-    // console.log("WOW MUCH INCREMENT", this);
-    console.log(product);
-    this.setState({ count: this.state.count + 1 });
-  };
+  //   handleIncrement = product => {
+  //     // arrow function, so that "this" is not redefined
+  //     // console.log("WOW MUCH INCREMENT", this);
+  //     console.log(product);
+  //     this.setState({ value: this.state.value + 1 });
+  //   };
   render() {
     return (
       <div>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={() => this.handleIncrement({ id: 1 })} //NOTE: passed reference instead of call for onClick -- PASSES ARGUMENT
+          onClick={() => this.props.onIncrement(this.props.counter)} //NOTE: passed reference instead of call for onClick -- PASSES ARGUMENT
           className="btn btn-secondary btn-sm"
         >
           Increment
         </button>
+        <button
+          onClick={() => this.props.delete(this.props.counter.id)}
+          className="btn btn-danger btn-sm m-2"
+        >
+          Delete
+        </button>
 
-        {this.renderTags()}
+        {/* {this.renderTags()} */}
       </div>
     );
   }
@@ -54,13 +60,13 @@ class Counter extends Component {
   //helper methods
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
+    classes += this.props.counter.value === 0 ? "warning" : "primary";
     return classes;
   }
 
   formatCount() {
-    const { count } = this.state;
-    return count === 0 ? "zero" : count;
+    const { value } = this.props.counter;
+    return value === 0 ? "zero" : value;
   }
 }
 
